@@ -1,25 +1,29 @@
-## Simulating the Common CPU Scheduling Algorithms
-**Start:** Oct 16, 2023, at 09:00am   
-**Due:** Nov 12, 2023, at 09:00pm 
+# CPU Scheduling Algorithms Simulator
 
-This project involves implementing (i.e., simulating) several different process scheduling algorithms. 
-The scheduler will be assigned a predefined set of tasks and will schedule the tasks based on the selected scheduling 
-algorithm. Each task is assigned a priority and CPU burst. The following scheduling algorithms will be implemented:
+## Project Overview
 
-* First-come, first-served (FCFS), which schedules tasks in the order in which they request the CPU.
-* Shortest-job-first (SJF), which schedules tasks in order of the length of the tasks’ next CPU burst.
-* Priority scheduling, which schedules tasks based on priority. 
-* Round-robin (rr) scheduling, where each task is run for a time quantum (or for the remainder of its CPU burst).
-* Priority with round-robin, which schedules tasks in order of priority and uses round-robin scheduling for tasks with equal priority.
+This project is a comprehensive simulator for various common CPU scheduling algorithms. The simulator is designed to emulate the behavior of a CPU scheduler by assigning a set of predefined tasks and scheduling them based on different algorithms. Each task is associated with a specific priority and CPU burst duration.
 
-Priorities range from 1 to 10, where a higher numeric value indicates a higher relative priority. 
-For rr scheduling, the length of a time `quantum` is `10` milliseconds.
+### Implemented Scheduling Algorithms:
+
+- **First-Come, First-Served (FCFS):** Schedules tasks in the order they request the CPU.
+- **Shortest-Job-First (SJF):** Prioritizes tasks with the shortest next CPU burst.
+- **Priority Scheduling:** Schedules tasks based on their priority.
+- **Round-Robin (RR):** Each task runs for a set time quantum or the remainder of its CPU burst.
+- **Priority with Round-Robin:** Combines priority scheduling and round-robin for tasks with equal priority.
+
+### Task Prioritization
+
+- Priorities are assigned from 1 to 10 (10 being the highest priority).
+- For RR scheduling, the time quantum is set to 10 milliseconds.
 
 ## Implementation
-The implementation of this project may be completed in C and program files supporting the project are 
-provided in the `StartKit-Code` folder. These supporting files read in the schedule of tasks, 
-insert the tasks into a list, and invoke the scheduler. The schedule of tasks has the form 
-`[task name][priority][CPU burst]`, with the following example format:  
+
+The implementation is done in C, with program files provided in the `StartKit-Code` folder. The files handle task scheduling, list management, and invocation of the scheduler algorithms.
+
+### Task Format
+
+Tasks are formatted as `[task name][priority][CPU burst]`. For example:
     
     T1, 4, 20   
     T2, 2, 25   
@@ -27,23 +31,8 @@ insert the tasks into a list, and invoke the scheduler. The schedule of tasks ha
     T4, 3, 15   
     T5, 10, 10  
     
-Thus, task T1 has priority 4 and a CPU burst of 20 milliseconds, and so forth. It is assumed that all tasks arrive at 
-the same time, so your scheduler algorithms do not have to support higher-priority processes preempting processes with 
-lower priorities. Tasks must be placed into a queue or list in the order they appear in the input.
-
-There are a few different strategies for organizing the list of tasks, as first presented in Section 5.1.2. One approach 
-is to place all tasks in a single unordered list, where the strategy for task selection depends on the scheduling
-algorithm. For example, SJF scheduling would search the list to find the task with the shortest next CPU burst. 
-Alternatively, a list could be ordered according to scheduling criteria (that is, by priority). One other strategy 
-involves having a separate queue for each unique priority, as shown in Figure 5.7. These approaches are briefly 
-discussed in Section 5.3.6. It is also worth highlighting that we are using the terms list and queue somewhat 
-interchangeably. However, a queue has very specific FIFO functionality, whereas a list does not have such strict 
-insertion and deletion requirements. You are likely to find the functionality of a general list to be more suitable 
-when completing this project.
-
 Processes should be run in the order they appear in the input. Processes with equal priorities or burst times should be 
-executed in the order they appear in the input. This applies to ties that may arise during SJF, Priority or Priority 
-with round-robin scheduling (see example output below).
+executed in the order they appear in the input.
 
 ## Implementation Details
 The file `driver.c` reads in the schedule of tasks, inserts each task into a linked list, and invokes the process 
@@ -56,40 +45,6 @@ scheduling algorithm that will be invoked by driver. For example, to build the F
 and would execute the scheduler (using the schedule of tasks `schedule.txt`) as follows:  
     
     ./fcfs schedule.txt 
-Before proceeding, be sure to familiarize yourself with the source code provided as well as the Makefile.
 
-## Evaluating Your Implementation
+## Evaluating  Implementation
 You can see the correct outputs for all algorithms for a sample input [here](CorrectOutput.md).
-
-
-## Deliverables
-
-1. Completing this project will require writing the following C files, which invoke the appropriate scheduling 
-algorithm:
-```    
-schedule_fcfs.c   
-schedule_sjf.c   
-schedule_rr.c   
-schedule_priority.c     
-schedule_priority_rr.c   
-``` 
-2. And calculating the *average* **turnaround time**, **waiting time**, and **response time** for each of the above scheduling algorithms.
-
-3. You need to submit one zip file, `project_cpu.zip` that includes the starter code (even if it was not modified), Makefile and any source files that were added. Do not submit object (*.o) files or compiled executables.
-
-**Note 1:** [here is a quick tutorial on makefile](http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/), in case you are not familiar.
-
-**Note 2**: TAs will evaluate your projects on one of the Department's servers with the EECS3221 standard configuration. 
-The standard configuration for the course has been described in the Projects Environmental Setup Guide, available in eClass. 
-
-## Evaluation
-Correct implementation of each algorithm will get 4 marks which make a total of 20 points for the project. 
-The 4 marks for each algorithm is broken down as follow:
-1. Correct output (the order and values): 2.5 points
-   1. One incorrect line: -0.5 point
-   2. Two incorrect lines: -1   point
-   3. Duplicate lines: -0.5 point
-   4. Three or more lines of mistakes: -2.5
-2. Correct Average waiting time: 0.5 point
-3. Correct Average turnaround time: 0.5 point
-4. Correct Average response time: 0.5 point
